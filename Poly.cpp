@@ -2,6 +2,7 @@
 
 Poly::Poly()
 {
+	head = new PolyNode (-1, 0, NULL);
 	// TODO	
 }
 
