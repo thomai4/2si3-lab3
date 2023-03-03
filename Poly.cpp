@@ -13,6 +13,7 @@ Poly::Poly(const std::vector<int>& deg, const std::vector<double>& coeff)
 
 	for(int i = 0; i < deg.size(); i++) {
 		current->next = new PolyNode(deg.at(i), coeff.at(i), NULL);
+		current=current->next;
 	}
 }
 
@@ -49,13 +50,25 @@ void Poly::duplicate(Poly& outputPoly)
 int Poly::getDegree()
 {
 	// TODO
-	return -2;//change this after completing this function
+	if(head->next == NULL) {
+		return -1;
+	} else {
+		return head->next->deg;
+	}
 }
 
 int Poly::getTermsNo()
 {
 	// TODO
-	return -1;//change this after completing this function
+	int count = 0;
+	PolyNode* current = head;
+
+	while(current->next != NULL) {
+		count++;
+		current = current->next;
+	}
+
+	return count;//change this after completing this function
 }
 
 double Poly::evaluate(double x)
