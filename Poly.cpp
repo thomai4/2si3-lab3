@@ -7,7 +7,12 @@ Poly::Poly()
 
 Poly::Poly(const std::vector<int>& deg, const std::vector<double>& coeff)
 {
-	// TODO	
+	head = new PolyNode(-1, 0, NULL);
+	PolyNode* current = head;
+
+	for(int i = 0; i < deg.size(); i++) {
+		current->next = new PolyNode(deg.at(i), coeff.at(i), NULL);
+	}
 }
 
 Poly::~Poly()
