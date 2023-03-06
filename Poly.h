@@ -27,7 +27,7 @@ public:
 	std::string toString();
 
 	// used for testing
-	PolyNode* getHead() {
+	PolyNode* getHead() const{
 		return head;
 	};
 };

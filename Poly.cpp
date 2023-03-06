@@ -1,4 +1,5 @@
 #include "Poly.h"
+#include <cmath>
 
 Poly::Poly()
 {
@@ -25,11 +26,45 @@ Poly::~Poly()
 void Poly::addMono(int i, double c)
 {
 	// TODO
+	PolyNode* current = head;
+	PolyNode* tmp = NULL;
+	int flag = 0;
+
+	while(current->next!=NULL){
+		if(i==current->next->deg){
+			if(((current->next->coeff)+c)==0){
+				tmp=current->next;
+				current->next=current->next->next;
+				delete tmp;
+				flag=1;
+				break;
+			}
+			else{
+				current->next->coeff+=c;
+				flag=1;
+				break;
+			}
+
+		}
+		else if(i>current->next->deg){
+			current->next = new PolyNode(i, c, current->next);
+			flag=1;
+			break;
+		}
+		current=current->next;
+	}
+	if(flag==0){
+		current->next = new PolyNode(i, c, current->next);
+	}
 }
 
 void Poly::addPoly(const Poly& p)
 {
-	// TODO
+	PolyNode* current = p.getHead();
+	while(current->next!=NULL){
+		addMono(current->next->deg, current->next->coeff);
+		current=current->next;
+	}
 }
 
 void Poly::multiplyMono(int i, double c)
@@ -44,6 +79,11 @@ void Poly::multiplyPoly(const Poly& p)
 
 void Poly::duplicate(Poly& outputPoly)
 {
+	PolyNode* current = head;
+	while(current->next!=NULL){
+		outputPoly.addMono(current->next->deg, current->next->coeff);
+		current=current->next;
+	}
 	// TODO
 }
 
@@ -73,8 +113,16 @@ int Poly::getTermsNo()
 
 double Poly::evaluate(double x)
 {
+	PolyNode* current = head;
+	PolyNode* tmp = NULL;
+	double eval=0;
+
+	while(current->next!=NULL){
+		eval+=(current->next->coeff)*(std::pow(x,current->next->deg));
+		current=current->next;
+	}
 	// TODO
-	return -1;//change this after completing this function
+	return eval;//change this after completing this function
 }
 
 std::string Poly::toString()
