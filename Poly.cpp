@@ -1,10 +1,12 @@
 #include "Poly.h"
 #include <cmath>
+#include <iostream>
+
+using namespace std;
 
 Poly::Poly()
 {
 	head = new PolyNode (-1, 0, NULL);
-	// TODO	
 }
 
 Poly::Poly(const std::vector<int>& deg, const std::vector<double>& coeff)
@@ -20,12 +22,19 @@ Poly::Poly(const std::vector<int>& deg, const std::vector<double>& coeff)
 
 Poly::~Poly()
 {
-	// TODO
+	PolyNode* temp = head->next;
+
+	while(head->next != NULL) {
+		temp = temp->next;
+		delete head->next;
+		head->next = temp;
+	}
+
+	delete head;
 }
 
 void Poly::addMono(int i, double c)
 {
-	// TODO
 	PolyNode* current = head;
 	PolyNode* tmp = NULL;
 	int flag = 0;
@@ -84,12 +93,10 @@ void Poly::duplicate(Poly& outputPoly)
 		outputPoly.addMono(current->next->deg, current->next->coeff);
 		current=current->next;
 	}
-	// TODO
 }
 
 int Poly::getDegree()
 {
-	// TODO
 	if(head->next == NULL) {
 		return -1;
 	} else {
@@ -99,7 +106,6 @@ int Poly::getDegree()
 
 int Poly::getTermsNo()
 {
-	// TODO
 	int count = 0;
 	PolyNode* current = head;
 
@@ -108,25 +114,30 @@ int Poly::getTermsNo()
 		current = current->next;
 	}
 
-	return count;//change this after completing this function
+	return count;
 }
 
 double Poly::evaluate(double x)
 {
 	PolyNode* current = head;
-	PolyNode* tmp = NULL;
 	double eval=0;
 
 	while(current->next!=NULL){
 		eval+=(current->next->coeff)*(std::pow(x,current->next->deg));
 		current=current->next;
 	}
-	// TODO
-	return eval;//change this after completing this function
+
+	return eval;
 }
 
 std::string Poly::toString()
 {
-	// TODO
-	return "";//change this after completing this function
+	PolyNode* current = head->next;
+	string str = "degree = " + to_string(getDegree());
+
+	while(current != NULL) {
+		str += "; a(" + to_string(current->deg) + ") = " + to_string(current->coeff);
+	}
+
+	return str;
 }
