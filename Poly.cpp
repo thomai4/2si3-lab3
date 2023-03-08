@@ -4,12 +4,12 @@
 
 using namespace std;
 
-Poly::Poly()
+Poly::Poly() //space & time: O(1)
 {
 	head = new PolyNode (-1, 0, NULL);
 }
 
-Poly::Poly(const std::vector<int>& deg, const std::vector<double>& coeff)
+Poly::Poly(const std::vector<int>& deg, const std::vector<double>& coeff) // space & time: O(n)
 {
 	head = new PolyNode(-1, 0, NULL);
 	PolyNode* current = head;
@@ -20,7 +20,7 @@ Poly::Poly(const std::vector<int>& deg, const std::vector<double>& coeff)
 	}
 }
 
-Poly::~Poly()
+Poly::~Poly() // space O(1), time O(n)
 {
 	PolyNode* temp = head->next;
 
@@ -33,7 +33,7 @@ Poly::~Poly()
 	delete head;
 }
 
-void Poly::addMono(int i, double c)
+void Poly::addMono(int i, double c) // space  O(1), time O(n)
 {
 	PolyNode* current = head;
 	PolyNode* tmp = NULL;
@@ -67,7 +67,7 @@ void Poly::addMono(int i, double c)
 	}
 }
 
-void Poly::addPoly(const Poly& p)
+void Poly::addPoly(const Poly& p)  // space  O(n), time O(n^2)
 {
 	PolyNode* current = p.getHead();
 	while(current->next!=NULL){
@@ -76,7 +76,7 @@ void Poly::addPoly(const Poly& p)
 	}
 }
 
-void Poly::multiplyMono(int i, double c)
+void Poly::multiplyMono(int i, double c)  // space  O(1), time O(n)
 {
 	PolyNode* current = head->next;
 
@@ -91,7 +91,7 @@ void Poly::multiplyMono(int i, double c)
 	}
 }
 
-void Poly::multiplyPoly(const Poly& p)
+void Poly::multiplyPoly(const Poly& p)  // space  O(n), time O(n^3)
 {
 	if(head->next == NULL) {
 		return;
@@ -113,7 +113,7 @@ void Poly::multiplyPoly(const Poly& p)
 	}
 }
 
-void Poly::makeEmpty() {
+void Poly::makeEmpty() {  // space  O(1), time O(n)
 	PolyNode* temp = head->next;
 
 	while(head->next != NULL) {
@@ -125,7 +125,7 @@ void Poly::makeEmpty() {
 	head->next = NULL;
 }
 
-void Poly::duplicate(Poly& outputPoly)
+void Poly::duplicate(Poly& outputPoly)  // space  O(n), time O(n)
 {
 	PolyNode* current = head;
 	while(current->next!=NULL){
@@ -134,7 +134,7 @@ void Poly::duplicate(Poly& outputPoly)
 	}
 }
 
-int Poly::getDegree()
+int Poly::getDegree()  // space  O(1), time O(1)
 {
 	if(head->next == NULL) {
 		return -1;
@@ -143,7 +143,7 @@ int Poly::getDegree()
 	}
 }
 
-int Poly::getTermsNo()
+int Poly::getTermsNo()  // space  O(1), time O(n)
 {
 	int count = 0;
 	PolyNode* current = head;
@@ -156,7 +156,7 @@ int Poly::getTermsNo()
 	return count;
 }
 
-double Poly::evaluate(double x)
+double Poly::evaluate(double x)  // space  O(1), time O(n)
 {
 	PolyNode* current = head;
 	double eval=0;
@@ -169,7 +169,7 @@ double Poly::evaluate(double x)
 	return eval;
 }
 
-std::string Poly::toString()
+std::string Poly::toString()  // space  O(1), time O(n)
 {
 	PolyNode* current = head->next;
 	string str = "degree = " + to_string(getDegree());
