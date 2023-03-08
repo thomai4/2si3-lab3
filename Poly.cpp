@@ -78,12 +78,51 @@ void Poly::addPoly(const Poly& p)
 
 void Poly::multiplyMono(int i, double c)
 {
-	// TODO
+	PolyNode* current = head->next;
+
+	if(c == 0) {
+		head->next = NULL;
+	} else {
+		while(current != NULL) {
+			current->coeff *= c;
+			current->deg += i;
+			current = current->next;
+		}
+	}
 }
 
 void Poly::multiplyPoly(const Poly& p)
 {
-	// TODO
+	if(head->next == NULL) {
+		return;
+	}
+
+	PolyNode* current = p.head->next;
+	Poly product;
+	Poly copy;
+
+	duplicate(copy);
+	makeEmpty();
+
+	while(current != NULL) {
+		copy.duplicate(product);
+		product.multiplyMono(current->deg, current->coeff);
+		addPoly(product);
+		product.makeEmpty();
+		current = current->next;
+	}
+}
+
+void Poly::makeEmpty() {
+	PolyNode* temp = head->next;
+
+	while(head->next != NULL) {
+		temp = temp->next;
+		delete head->next;
+		head->next = temp;
+	}
+
+	head->next = NULL;
 }
 
 void Poly::duplicate(Poly& outputPoly)
@@ -137,6 +176,7 @@ std::string Poly::toString()
 
 	while(current != NULL) {
 		str += "; a(" + to_string(current->deg) + ") = " + to_string(current->coeff);
+		current = current->next;
 	}
 
 	return str;

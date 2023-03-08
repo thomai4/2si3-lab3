@@ -20,6 +20,7 @@ public:
 	void addPoly(const Poly& p);
 	void multiplyMono(int i, double c);
 	void multiplyPoly(const Poly& p);
+	void makeEmpty();
 	void duplicate(Poly& outputPoly);
 	int getDegree();
 	int getTermsNo();
