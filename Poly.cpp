@@ -81,7 +81,7 @@ void Poly::multiplyMono(int i, double c)
 	PolyNode* current = head->next;
 
 	if(c == 0) {
-		head->next = NULL;
+		this->makeEmpty();
 	} else {
 		while(current != NULL) {
 			current->coeff *= c;
